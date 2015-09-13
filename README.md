@@ -1,3 +1,3 @@
 # epicgame
-Frontend rep KOSTYA
-SEREGHA
+Frontend rep
+CAPS-Labs
