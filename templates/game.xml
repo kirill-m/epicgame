@@ -1,0 +1,8 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<h1>Epic Game</h1>
+		<p>Under construction...</p>
+		<div class="window">
+			
+		</div>
+		<a class="back" href="#">Back</a>
+</fest:template>
