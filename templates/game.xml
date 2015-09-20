@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<h1>Epic Game</h1>
-		<p>Under construction...</p>
-		<div class="window">
+		<p>!The game is under construction...!</p>
+		<div class="main__page__game-area">
 			
 		</div>
 		<a class="back" href="#">Back</a>
