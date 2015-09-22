@@ -26,8 +26,9 @@ define([
         },
         scoreboardAction: function () {
             console.log("from scoreboard");
-            var scoreboardView = scoreboard;
-            scoreboard.render()
+            var scoreboardView =  scoreboard;
+            scoreboard.render();
+            scoreboard.show();
         },
         gameAction: function () {
             console.log("from game");
