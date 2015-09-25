@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<h1>Epic Game</h1>
 		<p>Scoreboard</p>
-		<div class="main__page__scoreboard">
-			<p class="js-score"></p>
+		<div class="main__page__scoreboard">	
 		</div>
+		<a class="back" href="#">Back</a>
 </fest:template>

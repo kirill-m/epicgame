@@ -3,5 +3,5 @@
 		<p>!The game is under construction...!</p>
 		<div class="main__page__game-area">	
 		</div>
-		
+		<a class="back" href="#">Back</a>
 </fest:template>

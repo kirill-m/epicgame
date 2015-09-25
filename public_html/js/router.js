@@ -21,7 +21,7 @@ define([
         },
         defaultActions: function () {
             console.log("from default");
-            var mainView = main;
+            var mainView = main; //new main() ???
             mainView.render();
         },
         scoreboardAction: function () {

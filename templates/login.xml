@@ -8,6 +8,7 @@
 				<input class="js-submit main__page__menu__input main__page__menu__input_submit" type="submit" name="submit" value="Submit"/>
 			</form>
 		</div>
+		<a class="back" href="#">Back</a>
 		<script>
 			<!-- listen for clicks -->
 			$('form').on('submit', function(event){
@@ -16,7 +17,5 @@
 				});
 				event.preventDefault();
 			});
-
-			
 		</script>
 </fest:template>

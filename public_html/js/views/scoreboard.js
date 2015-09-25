@@ -32,19 +32,19 @@ define([
             var p9 = new player({name: "p9", score: 22});
             var p10 = new player({name: "p10", score: 96});
             var arr = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
-            var allPlayers = players;
+            var allPlayers = players; //new players() ???
             allPlayers.comparator = function(player) {
-                return (-player.get("score"));
+                 return (-player.get("score"));
             }
+            allPlayers.add(arr);
             for (i = 0; i < arr.length; i++){
-                allPlayers.add(arr[i]);    
-            }
-            for (i = 0; i < arr.length; i++){
-                this.$el.find("div").append("<p class='js-score'>"
+                this.$el.find(".main__page__scoreboard").append("<p class='js-score'>"
                     + allPlayers.at(i).get("name") + " "
                     + allPlayers.at(i).get("score") + "</p>");
-            }        
-            console.log(allPlayers.pluck("name"));
+            }
+            for (i = 0; i < arr.length; i++){
+                console.log(i + ":" + " " + arr[i].get("score"));    
+            }     
         },
         hide: function () {
             // TODO

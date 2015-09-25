@@ -8,4 +8,5 @@
 			<li><a class="main__page__menu__login" href="#login">LogIn</a></li>
 		</ul>
 	</div>
+	<div class="main__empty"></div>
 </fest:template>

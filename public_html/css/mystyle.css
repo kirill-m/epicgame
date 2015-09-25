@@ -23,6 +23,10 @@ body, html {
 	margin-top: -23px;
 }
 
+.main__empty {
+	height: 72px;
+}
+
 .main__page__menu {
 	width: 350px;
 	height: 410px;
@@ -112,7 +116,7 @@ li {
 	margin-top: 20px;
 }
 
-.main__page__menu__input_login, .main__page__menu__input_password input[type="login"], input[type="password"] {
+.main__page__menu__input_login, .main__page__menu__input_password {
 	
   	border: solid 1px #dcdcdc;
   	transition: box-shadow 0.3s, border 0.3s;
@@ -132,7 +136,7 @@ li {
 
 .main__page__scoreboard {
 	width: 500px;
-	/*height: 410px;*/
+	min-height: 450px;
 	padding: 20px 20px 20px 20px;
 	background-color: #ffaaaa;
 	margin: auto;
