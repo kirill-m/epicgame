@@ -2,6 +2,7 @@ package frontend;
 
 import main.AccountService;
 import main.UserProfile;
+import org.jetbrains.annotations.NotNull;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -22,8 +23,8 @@ public class LogOutServlet extends HttpServlet {
 
 
 
-    public void doGet(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
+    @Override public void doGet(@NotNull HttpServletRequest request,
+                      @NotNull HttpServletResponse response) throws ServletException, IOException {
 
         String sessionCurrent = request.getSession().getId();
 

@@ -1,6 +1,8 @@
 package main;
 
 
+import org.jetbrains.annotations.Nullable;
+
 public class UserProfile {
     private String name;
     private String password;
@@ -10,11 +12,11 @@ public class UserProfile {
         this.password = password;
     }
 
-    public String getName() {
+    @Nullable public String getName() {
         return name;
     }
 
-    public String getPassword() {
+    @Nullable public String getPassword() {
         return password;
     }
 }

@@ -1,7 +1,10 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="players">
 	<h1>Epic Game</h1>
 		<p>Scoreboard</p>
 		<div class="main__page__scoreboard">	
+		<fest:each iterate="players" index='i' value="player">	
+			<p><fest:value>player.name</fest:value><fest:value>player.score</fest:value></p>	
+		</fest:each>
 		</div>
 		<a class="back" href="#">Back</a>
 </fest:template>

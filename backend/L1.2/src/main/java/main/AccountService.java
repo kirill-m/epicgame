@@ -1,12 +1,18 @@
 package main;
 
+
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class AccountService {
-    private Map<String, UserProfile> users = new HashMap<>();
-    private Map<String, UserProfile> sessions = new HashMap<>();
+
+    @NotNull private Map<String, UserProfile> users = new HashMap<>();
+    @NotNull private Map<String, UserProfile> sessions = new HashMap<>();
 
     public boolean addUser(String userName, UserProfile userProfile) {
         if (users.containsKey(userName))
@@ -19,11 +25,11 @@ public class AccountService {
         sessions.put(sessionId, userProfile);
     }
 
-    public UserProfile getUser(String userName) {
+    @Nullable public UserProfile getUser(String userName) {
         return users.get(userName);
     }
 
-    public String isSignedIn(String sessionId) {
+    @Nullable public String isSignedIn(String sessionId) {
         if (sessions.containsKey(sessionId))
             return sessionId;
         else return null;

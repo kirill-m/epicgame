@@ -2,6 +2,7 @@ package frontend;
 
         import example.TimeHelper;
         import main.AccountService;
+        import org.jetbrains.annotations.NotNull;
         import templater.PageGenerator;
 
         import javax.servlet.ServletException;
@@ -13,14 +14,13 @@ package frontend;
         import java.util.Map;
 
     public class AdminPageServlet extends HttpServlet {
-    public static final String ADMIN_PAGE_URL = "/admin";
         private AccountService accountService;
 
         public AdminPageServlet(AccountService accountService) {
             this.accountService = accountService;
         }
 
-    public void doGet(HttpServletRequest request,
+    @Override public void doGet(@NotNull HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
         String password = request.getParameter("password");
         if (String.valueOf(password).equals("admin")) {

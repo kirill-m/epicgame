@@ -13,38 +13,32 @@ define([
     var View = Backbone.View.extend({
         el: '.main__page',
         template: tmpl,
+        collection: players,
+        model: player,
         initialize: function () {
             console.log("scoreboard view is initialized");
+            this.collection.push(new this.model({name: "Kirill", score: 99}));
+            this.collection.push(new this.model({name: 'Natasha', score: 100}));
+            this.collection.push(new this.model({name: 'Peter', score: 11}));
+            this.collection.push(new this.model({name: 'Misha', score: 83}));
+            this.collection.push(new this.model({name: 'Kolya', score: 97}));
+            this.collection.push(new this.model({name: 'John', score: 42}));
+            this.collection.push(new this.model({name: 'Mike', score: 46}));
+            this.collection.push(new this.model({name: 'Miley', score: 79}));
+            this.collection.push(new this.model({name: 'Champion', score: 17}));
+            this.collection.push(new this.model({name: 'Anonimus', score: 94}));
+            this.collection.comparator = function(player) {
+                 return -player.get("score");
+            };
+            this.collection.sort('score');
+            console.log(this.collection.toJSON());
         },
         render: function () {
-            this.$el.html(this.template);
+            this.$el.html(this.template(this.collection.toJSON()));
             return this;
         },
         show: function () {
-            var p1 = new player({name: "Kirill", score: 99});
-            var p2 = new player({name: "Kostya", score: 78});
-            var p3 = new player({name: "Serioga", score: 42});
-            var p4 = new player({name: "p4", score: 100});
-            var p5 = new player({name: "p5", score: 82});
-            var p6 = new player({name: "p6", score: 46});
-            var p7 = new player({name: "p7", score: 85});
-            var p8 = new player({name: "p8", score: 71});
-            var p9 = new player({name: "p9", score: 22});
-            var p10 = new player({name: "p10", score: 96});
-            var arr = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
-            var allPlayers = players; //new players() ???
-            allPlayers.comparator = function(player) {
-                 return (-player.get("score"));
-            }
-            allPlayers.add(arr);
-            for (i = 0; i < arr.length; i++){
-                this.$el.find(".main__page__scoreboard").append("<p class='js-score'>"
-                    + allPlayers.at(i).get("name") + " "
-                    + allPlayers.at(i).get("score") + "</p>");
-            }
-            for (i = 0; i < arr.length; i++){
-                console.log(i + ":" + " " + arr[i].get("score"));    
-            }     
+            //TODO    
         },
         hide: function () {
             // TODO

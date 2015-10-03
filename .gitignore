@@ -1,2 +1,7 @@
 *.*~
 *.html~
+*.md~
+target/
+.idea
+node_modules
+L1.2-1.0-jar-with-dependencies.jar

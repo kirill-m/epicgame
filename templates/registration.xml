@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<h1>Epic Game</h1>
-		<p>Login</p>
+		<p>Registration</p>
 		<div class="main__page__menu">
 			<form  method='post' >
 				<input class="js-login main__page__menu__input main__page__menu__input_login" type="text" name="login" placeholder="Login" maxlength="30"  pattern="[A-Za-z-0-9]+" required="required" title="A-Z, a-z, 0-9"/>
