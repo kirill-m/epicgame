@@ -21,14 +21,20 @@ import java.io.IOException;
 public class Main {
 
     public static final int DEF_PORT = 8080;
+    public static final int MAX_VALID_PORT = 49151;
+    public static final int MIN_VALID_PORT = 1024;
+
 
     public static void main(@NotNull String[] args) throws Exception {
         int port = DEF_PORT;
         if (args.length == 1) {
             String portString = args[0];
-            if ((Integer.valueOf(portString)>=1024) && (Integer.valueOf(portString)<=49151))
-            port = Integer.valueOf(portString);
-            else ;
+            if ((Integer.valueOf(portString) >= MIN_VALID_PORT) && (Integer.valueOf(portString) <= MAX_VALID_PORT))
+                port = Integer.valueOf(portString);
+            else {
+                System.out.append("Incorrect port, try again").append('\n');
+                return;
+            }
         }
 
         System.out.append("Starting at port: ").append(String.valueOf(port)).append('\n');
