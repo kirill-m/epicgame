@@ -9,7 +9,7 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.main__page',
+        el: '.page',
         template: tmpl,
         model: registration,
         events: {
@@ -24,7 +24,7 @@ define([
             return this;
         },
         show: function () {
-            // TODO
+            this.$el.siblings(".button_back").show();
         },
         hide: function () {
             // TODO

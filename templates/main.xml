@@ -1,12 +1,13 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<h1>Epic Game</h1>
-	<p>Main Menu</p>
-	<div class="main__page__menu">
-		<ul>
-			<li><a class="main__page__menu__scoreboard" href="#scoreboard">Score Board</a></li>
-			<li><a class="main__page__menu__start-game" href="#game">Start Game</a></li>
-			<li><a class="main__page__menu__login" href="#login">LogIn</a></li>
+	<div class="header">
+	<h1 class="header__title">Epic Game</h1>
+	<p class="header__par">Main Menu</p>
+	</div>
+	<div class="square">
+		<ul class="menu">
+			<li class="menu__item"><a class="button" href="#scoreboard">Score Board</a></li>
+			<li class="menu__item"><a class="button" href="#game">Start Game</a></li>
+			<li class="menu__item"><a class="button" href="#login">LogIn</a></li>
 		</ul>
 	</div>
-	<div class="main__empty"></div>
 </fest:template>

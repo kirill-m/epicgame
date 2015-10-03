@@ -7,7 +7,7 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.main__page',
+        el: '.page',
         template: tmpl,
         initialize: function () {
             console.log("game view is initialized");
@@ -17,7 +17,7 @@ define([
             return this;
         },
         show: function () {
-            // TODO
+            this.$el.siblings(".button_back").show();
         },
         hide: function () {
             // TODO

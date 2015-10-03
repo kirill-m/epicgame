@@ -11,7 +11,7 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.main__page',
+        el: '.page',
         template: tmpl,
         collection: players,
         model: player,
@@ -38,7 +38,7 @@ define([
             return this;
         },
         show: function () {
-            //TODO    
+            this.$el.siblings(".button_back").show();   
         },
         hide: function () {
             // TODO

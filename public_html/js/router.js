@@ -26,6 +26,7 @@ define([
             console.log("from default");
             var mainView = main;
             mainView.render();
+            mainView.hide();
         },
         scoreboardAction: function () {
             console.log("from scoreboard");
@@ -37,16 +38,19 @@ define([
             console.log("from game");
             var gameView = game;
             gameView.render();
+            gameView.show();
         },
         loginAction: function () {
             console.log("from login");
             var loginView = login;
             loginView.render();
+            loginView.show();
         },
         registrationAction: function () {
             console.log("from registration");
             var registrationView = registration;
             registrationView.render();
+            loginView.show();
         }
     });
 

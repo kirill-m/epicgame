@@ -9,11 +9,12 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.main__page',
+        el: '.page',
         template: tmpl,
         model: new login(),
         events: {
-            'click .js-submit': 'validateForm'            
+            'click .js-submit': 'validateForm',
+            'load': 'show'            
         },
         initialize: function () {
             console.log("login view is initialized");
@@ -24,22 +25,12 @@ define([
             return this;
         },
         show: function () {
-            
+            this.$el.siblings(".button_back").show();
         },
         hide: function () {
             // TODO
         },
         validateForm: function(event){
-            //event.preventDefault();
-            var obj = $(".main").find("form");
-            var lgn = obj.find(".js-login").val().length;
-            var pass = obj.find(".js-password").val().length;
-            //obj.find(".warning1").text("LOL");
-            //obj.find(".warning2").text("lol");
-            // if (lgn == 0)
-            //     obj.find(".warning1").text("Enter login");
-            // if (pass < 5)
-            //     obj.find(".warning2").text("Password is too short");
         }
     });
 
