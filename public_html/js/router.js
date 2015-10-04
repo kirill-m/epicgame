@@ -50,7 +50,7 @@ define([
             console.log("from registration");
             var registrationView = registration;
             registrationView.render();
-            loginView.show();
+            registration.show();
         }
     });
 

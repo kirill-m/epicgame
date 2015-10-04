@@ -21,7 +21,7 @@ define([
             this.collection.push(new this.model({name: 'Natasha', score: 100}));
             this.collection.push(new this.model({name: 'Peter', score: 11}));
             this.collection.push(new this.model({name: 'Misha', score: 83}));
-            this.collection.push(new this.model({name: 'Kolya', score: 97}));
+            this.collection.push(new this.model({name: 'Kostya', score: 97}));
             this.collection.push(new this.model({name: 'John', score: 42}));
             this.collection.push(new this.model({name: 'Mike', score: 46}));
             this.collection.push(new this.model({name: 'Miley', score: 79}));
