@@ -12,14 +12,21 @@ define([
             console.log("Registration model initialized.");
     	},
         onSubmit: function(event) {
-            // $('form').on('submit', function(event){
-            //     console.log($(this).serialize());
-            //     $.post('/api/v1/auth/signin', $(this).serialize(), function(response) { 
-            //     console.log('RESPONSE');
-            //     });
-            // });
-        }
-
+            
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                data: data
+            }).done(function(obj) {
+                console.log("SERVER ANSWER : " + obj);
+                var answer = JSON.parse(obj);
+                if (answer.success) {
+                    location.href = "#login";
+                } else {
+                    console.log(answer.message);
+                }
+            });
+        }    
     });
 
     return Model;

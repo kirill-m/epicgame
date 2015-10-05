@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<div class="header">
-	<h1 class="header__title">Epic Game</h1>
-	<p class="header__par">Main Menu</p>
+		<h1 class="header__title">Epic Game</h1>
+		<p class="header__par">Main Menu</p>
 	</div>
 	<div class="square">
 		<ul class="menu">
