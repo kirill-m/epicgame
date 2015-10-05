@@ -1,26 +1,27 @@
 package frontend;
 
-        import example.TimeHelper;
-        import main.AccountService;
-        import org.jetbrains.annotations.NotNull;
-        import templater.PageGenerator;
+import example.TimeHelper;
+import main.AccountService;
+import org.jetbrains.annotations.NotNull;
+import templater.PageGenerator;
 
-        import javax.servlet.ServletException;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import java.io.IOException;
-        import java.util.HashMap;
-        import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-    public class AdminPageServlet extends HttpServlet {
-        private AccountService accountService;
+public class AdminPageServlet extends HttpServlet {
+    private AccountService accountService;
 
-        public AdminPageServlet(AccountService accountService) {
-            this.accountService = accountService;
-        }
+    public AdminPageServlet(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
-    @Override public void doGet(@NotNull HttpServletRequest request,
+    @Override
+    public void doGet(@NotNull HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
         String password = request.getParameter("password");
         if (String.valueOf(password).equals("admin")) {
@@ -46,8 +47,7 @@ package frontend;
             pageVariables.put("countSignUp", countSignUp);
 
             response.getWriter().println(PageGenerator.getPage("admin.html", pageVariables));
-        }
-        else {
+        } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("loginStatus", "error admin log");
             response.getWriter().print(PageGenerator.getPage("adminlogin.html", pageVariables));

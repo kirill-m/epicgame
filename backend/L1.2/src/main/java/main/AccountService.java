@@ -1,7 +1,6 @@
 package main;
 
 
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,8 +10,10 @@ import java.util.Map;
 
 public class AccountService {
 
-    @NotNull private Map<String, UserProfile> users = new HashMap<>();
-    @NotNull private Map<String, UserProfile> sessions = new HashMap<>();
+    @NotNull
+    private Map<String, UserProfile> users = new HashMap<>();
+    @NotNull
+    private Map<String, UserProfile> sessions = new HashMap<>();
 
     public boolean addUser(String userName, UserProfile userProfile) {
         if (users.containsKey(userName))
@@ -25,11 +26,17 @@ public class AccountService {
         sessions.put(sessionId, userProfile);
     }
 
-    @Nullable public UserProfile getUser(String userName) {
-        return users.get(userName);
+    @Nullable
+    public UserProfile getUser(String userName) {
+        try {
+            return users.get(userName);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
-    @Nullable public String isSignedIn(String sessionId) {
+    @Nullable
+    public String isSignedIn(String sessionId) {
         if (sessions.containsKey(sessionId))
             return sessionId;
         else return null;
@@ -43,12 +50,17 @@ public class AccountService {
         return false;
     }
 
-    public int countSignIn(){
-        return sessions.size();
+    public int countSignIn() {
+        try {
+            return sessions.size();
+
+        } catch (NullPointerException e) {
+            return -1;
+        }
     }
 
-    public int countSignUp(){
-        return  users.size();
+    public int countSignUp() {
+        return users.size();
     }
 }
 

@@ -22,8 +22,8 @@ public class LogOutServlet extends HttpServlet {
     }
 
 
-
-    @Override public void doGet(@NotNull HttpServletRequest request,
+    @Override
+    public void doGet(@NotNull HttpServletRequest request,
                       @NotNull HttpServletResponse response) throws ServletException, IOException {
 
         String sessionCurrent = request.getSession().getId();
@@ -34,9 +34,8 @@ public class LogOutServlet extends HttpServlet {
             accountService.removeSessions(sessionCurrent);
             pageVariables.put("isLogin", 0);
             pageVariables.put("loginStatus", "Loggout passed");
-        }
-        else {
-            pageVariables.put("isLogin",0);
+        } else {
+            pageVariables.put("isLogin", 0);
             pageVariables.put("loginStatus", "error logout");
         }
 
