@@ -11,10 +11,12 @@ public interface WebSocketService {
 
     void notifyEnemyNewScore(GameUser user);
 
-    void notifyStartGame(GameUser user);
+    void notifyStartGame(GameUser user, boolean shouldClick);
 
     void notifyCommonScore(GameUser user);
 
     void notifyGameOver(GameUser user, boolean win);
+
+    void notifyDisconnect(GameUser user);
 }
 

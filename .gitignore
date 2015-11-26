@@ -1,8 +1,15 @@
 *~
 /node_modules/
+/target/
 *.jar
+.sass_cache/
+.sass-cache
+.sass-cache/*
+*.scss
+*.css.map
 
 workspace.xml
 tasks.xml
 *.iws
 *.log
+

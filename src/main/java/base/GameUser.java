@@ -1,24 +1,31 @@
 package base;
+import base.Nail;
 
 
 public class GameUser {
-    private int myId;
-    private int enemyId;
+    private long myId;
+    private long enemyId;
     private final String myName;
     private String enemyName;
-    private int myScore = 0;
-    private int enemyScore = 0;
+    private float myScore = 0;
+    private float enemyScore = 0;
+    private  double frictionRate = 1;
+    private boolean shouldClick = false;
+    private Nail nail;
 
-    public GameUser(String myName, int id) {
+
+    public GameUser(String myName, long id, Nail nail) {
         this.myName = myName;
         this.myId = id;
+
+        this.nail = nail;
     }
 
     public String getMyName() {
         return myName;
     }
 
-    public int getMyId(){
+    public long getMyId(){
         return this.myId;
     }
 
@@ -26,19 +33,25 @@ public class GameUser {
         return enemyName;
     }
 
-    public int getEnemyId() { return enemyId;}
+    public long getEnemyId() { return enemyId;}
 
-    public void setEnemyId(int id) { this.enemyId = id;}
+    public void setEnemyId(long id) { this.enemyId = id;}
 
-    public int getMyScore() {
-        return myScore;
-    }
+    public float getMyScore() {return myScore;}
 
-    public int getEnemyScore() { return enemyScore; }
+    public float getEnemyScore() { return enemyScore; }
 
-    public void incrementMyScore() { myScore++; }
+    public  double getFrictionRate() { return  frictionRate; }
 
-    public void incrementEnemyScore() { enemyScore++; }
+    public double changeFrictionRate() { return frictionRate+=(getMyScore()+getEnemyScore())/nail.getHealth();}
+
+    public void incrementMyScore(int force) { myScore += force/frictionRate; }
+
+    public void incrementEnemyScore(int force) { enemyScore+=force/frictionRate; }
 
     public void setEnemyName(String enemyName) { this.enemyName = enemyName; }
+
+    public void setShouldClick(boolean currentClick) { this.shouldClick = currentClick;}
+
+    public boolean getShouldClick() {return shouldClick;}
 }

@@ -2,7 +2,10 @@ package mechanics;
 
 import base.GameMechanics;
 import base.GameUser;
+import base.Nail;
 import base.WebSocketService;
+import database.DBService;
+import example.ReadXMLFileSAX;
 import example.TimeHelper;
 import main.UserProfile;
 
@@ -15,37 +18,62 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private WebSocketService webSocketService;
 
-    private Map<Integer, GameSession> nameToGame = new HashMap<>();
+    private Nail nail;
 
-    private Set<GameSession> allSessions = new HashSet<>();
+    private DBService dbService;
+
+    GameSessionManager gameSessionManager = new GameSessionManager();
 
     private Queue<UserProfile> usersToGame = new ConcurrentLinkedQueue<>();
 
-    public GameMechanicsImpl(WebSocketService webSocketService) {
+    public GameMechanicsImpl(WebSocketService webSocketService, DBService dbService) {
         this.webSocketService = webSocketService;
+        this.nail = (Nail) ReadXMLFileSAX.readXML("data/nail.xml");
+        this.dbService = dbService;
     }
 
-    public void addUser(UserProfile user) {
+    @Override
+    public void notifyUserConnected(UserProfile user){
         usersToGame.add(user);
     }
 
     @Override
-    public void incrementScore(int id) {
-        GameSession myGameSession = nameToGame.get(id);
+    public void notifyUserDisconnected(UserProfile user){
+        usersToGame.remove(user);
+        long id = user.getId();
+        GameSession gameSession = gameSessionManager.get(id);
+        if(gameSession != null){
+            webSocketService.notifyDisconnect(gameSession.getEnemy(id));
+            gameSessionManager.removeSessions(id);
+        }
+    }
 
-        GameUser myUser = myGameSession.getSelf(id);
-        myUser.incrementMyScore();
+    @Override
+    public void incrementScore(long id, int force) {
+        gameSessionManager.incrementScore(id,force);
+        GameSession gameSession = gameSessionManager.get(id);
 
-        GameUser enemyUser = myGameSession.getEnemy(id);
-        enemyUser.incrementEnemyScore();
+        webSocketService.notifyMyNewScore(gameSession.getSelf(id));
+        webSocketService.notifyEnemyNewScore(gameSession.getEnemy(id));
+        webSocketService.notifyCommonScore(gameSession.getSelf(id));
+        webSocketService.notifyCommonScore(gameSession.getEnemy(id));
 
-        myGameSession.incrementCommonScore();
-        myGameSession.setLastClick(myUser);
-
-        webSocketService.notifyMyNewScore(myUser);
-        webSocketService.notifyEnemyNewScore(enemyUser);
-        webSocketService.notifyCommonScore(myUser);
-        webSocketService.notifyCommonScore(enemyUser);
+        if(gameSession.getCommonScore() >= nail.getHealth()){
+            boolean firstWin = gameSession.isFirstWin();
+            webSocketService.notifyGameOver(gameSession.getFirst(), firstWin);
+            webSocketService.notifyGameOver(gameSession.getSecond(), !firstWin);
+            if (firstWin){
+                dbService.incrementWons(gameSession.getFirst().getMyId());
+                dbService.incrementLoses(gameSession.getFirst().getEnemyId());
+            }
+            else {
+                dbService.incrementWons(gameSession.getFirst().getEnemyId());
+                dbService.incrementLoses(gameSession.getFirst().getMyId());
+            }
+//            webSocketService.notifyDisconnect(gameSession.getEnemy(id));
+//            webSocketService.notifyDisconnect(gameSession.getSelf(id));
+            gameSessionManager.removeSessions(id);
+        }
     }
 
     @Override
@@ -65,28 +93,9 @@ public class GameMechanicsImpl implements GameMechanics {
         if(usersToGame.size() >= 2){
             UserProfile first = usersToGame.poll();
             UserProfile second = usersToGame.poll();
-            starGame(first,second);
+            gameSessionManager.startGame(first,second,nail);
+            webSocketService.notifyStartGame(gameSessionManager.get(first.getId()).getSelf(first.getId()), true);
+            webSocketService.notifyStartGame(gameSessionManager.get(first.getId()).getSelf(second.getId()), false);
         }
-        for (GameSession session : allSessions) {
-            if (session.getCommonScore() >= 20) {
-                boolean firstWin = session.isFirstWin();
-                webSocketService.notifyGameOver(session.getFirst(), firstWin);
-                webSocketService.notifyGameOver(session.getSecond(), !firstWin);
-                allSessions.remove(session);
-            }
-        }
-    }
-
-
-    private void starGame(UserProfile first, UserProfile second) {
-        GameSession gameSession = new GameSession(first, second);
-        allSessions.add(gameSession);
-
-        nameToGame.put(first.getId(), gameSession);
-        nameToGame.put(second.getId(), gameSession);
-
-        System.out.println("GameMech StartGame() -> notifyStartGame");
-        webSocketService.notifyStartGame(gameSession.getSelf(first.getId()));
-        webSocketService.notifyStartGame(gameSession.getSelf(second.getId()));
     }
 }

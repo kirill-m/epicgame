@@ -48,15 +48,20 @@ public class SignInServlet extends HttpServlet {
             if (profile != null && password.equals(profile.getPassword())) {
                 accountService.addSessions(String.valueOf(sessionCurrent), profile);
                 responseJSON.put("success", true);
+                responseJSON.put("method", "signin");
                 responseJSON.put("message", " successfully logged in!");
                 responseJSON.put("name", name);
+                responseJSON.put("id", profile.getId());
             } else {
+                System.out.println("disconnect");
+                responseJSON.put("method", "signin");
                 responseJSON.put("success", false);
                 responseJSON.put("message", " login failed");
             }
         } else {
             responseJSON.put("name", name);
-            responseJSON.put("success", true);
+            responseJSON.put("method", "signin");
+            responseJSON.put("success", false);
             responseJSON.put("message", " already logged in");
         }
         response.getWriter().println(responseJSON.toString());

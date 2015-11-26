@@ -1,20 +1,16 @@
 define([
     'backbone',
-    'tmpl/login',
-    'models/user',
-    'collections/logged'
+    'tmpl/login'
 ], function(
     Backbone,
-    tmpl,
-    user,
-    logged
+    tmpl
 ){
 
     var View = Backbone.View.extend({
-        el: '.page',
+        el: '.login',
+        name: 'login',
         template: tmpl,
-        collection: logged,
-        model: user,
+        model: null,
         events: {
             'submit': 'onSubmit',
         },
@@ -27,15 +23,13 @@ define([
             return this;
         },
         show: function () {
-
+            this.trigger("show", this);
         },
         hide: function () {
-            //this.$el.find(".square").animate({bottom: '700px'});
+            this.$el.hide();
         },
 
         onSubmit: function(event) {
-            var loggedIn = this.collection;
-            //var userLogged = this.model;
             var $loginForm = $('.login-form__input');
             if (!$loginForm[0].checkValidity() ||
                 !$loginForm[1].checkValidity()) {
@@ -43,26 +37,12 @@ define([
             } else {
                 event.preventDefault();
                 var data =  $(".login-form").serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "/signin",
-                    data: data
-                }).done(function(obj) {
-                    console.log("SERVER ANSWER : " + obj);
-                    var answer = JSON.parse(obj);
-                    if (answer.success) {
-                        userLogged.set({name: answer.name, logged: true});
-                        console.log('model.logged login= ' + userLogged.get("logged"));
-                        location.href = "#";
-                        alert(answer.name + " " + answer.message);
-                    } else {
-                        alert(answer.message);
-                    }
-                });
+                this.model.save({}, {url: "/signin", data: data});
             }
+            $(".login-form")[0].reset();
         }
 
     });
 
-    return new View();
+    return View;
 });

@@ -1,33 +1,42 @@
 package main;
 
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public class UserProfile {
     private String name;
     private String password;
-    private int id;
+    private  int win;
+    private  int lose;
+    private long id;
 
-    public UserProfile(String login, String password) {
+    public UserProfile(String login, String password, int win, int lose) {
         this.name = login;
         this.password = password;
+        this.win = win;
+        this.lose = lose;
+
     }
 
-    @Nullable
+    @NotNull
     public String getName() {
         return name;
     }
 
-    @Nullable
+    @NotNull
     public String getPassword() {
         return password;
     }
 
-    public void setId(int id){
+    public  int getWin() {return win; }
+
+    public int getLose() {return  lose; }
+
+    public void setId(long id){
         this.id = id;
     }
 
-    public int getId(){
+    public long getId(){
         return id;
     }
 }

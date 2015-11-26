@@ -3,15 +3,14 @@ define([
 ], function(
     Backbone
 ){
-
     var Player = Backbone.Model.extend({
-    	urlRoot: '/player',
     	defaults: {
+    		id: null,
     		name: '',
-    		score: 0
+    		wons: 0,
+    		loses: 0
     	},
     	initialize: function(){
-    		console.log("Player has been created.");
     	},
 
     });

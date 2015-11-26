@@ -1,78 +1,57 @@
 define([
     'backbone',
-    'tmpl/game'
+    'tmpl/game',
+    'views/gameSocket'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    gameSocket
 ){
 
     var View = Backbone.View.extend({
-        el: '.page',
+        el: '.game',
         template: tmpl,
+        name: 'game',
+        model: null,
+        gameSocket: new gameSocket({model: this.model}),
         events: {
-            'click .button-group__button:first': 'knock1',
-            'click .button-group__button:nth-child(2)': 'knock2',
-            'click .button-group__button:nth-child(3)': 'knock3',
-            'click .square__reset': 'reset'
+            'click .game-form .game-form__btn1': 'btn1Click',
+            'click .game-form .game-form__btn2': 'btn2Click',
+            'click .game-form .game-form__btn3': 'btn3Click',
+            'click .button_back': 'backClick'
         },
         initialize: function () {
+            this.on('allowedToPlay', this.startGameSocket);
         },
         render: function () {
-            this.$el.html(this.template(userLogged.get("name")));
+            this.$el.html(this.template(this.model.toJSON()));
             this.delegateEvents();
-//            this.$el.find(".square").css('right', '700px')
-//                .animate({right: 0});
-//            this.$el.find(".button-group__button:first").on("click", this.knock1);
-//            this.$el.find(".button-group__button:nth-child(2)").on("click", this.knock2);
-//            this.$el.find(".button-group__button:nth-child(3)").on("click", this.knock3);
-//            this.$el.find(".square__reset").on("click", this.reset);
             return this;
         },
         show: function () {
-
+            this.trigger("show", this);
         },
         hide: function () {
-
+            this.$el.hide();
         },
-        knock1: function() {
-            if(this.$el.find('.square__button-group').attr("disabled") != "disabled") {
-                var $nail = this.$el.find('.square__nail');
-                $nail.animate({ top: "+=10"});
-                console.log(parseInt($nail.css('top'), 10));
-                if((parseInt($nail.css('top'), 10) > 245)) {
-                    alert("WINNER");
-                    this.$el.find('.square__button-group').attr("disabled", "disabled");
-                }
-            }
+        startGameSocket: function() {
+            this.gameSocket = new gameSocket({model: this.model});
+            this.gameSocket.onGameStart();
         },
-        knock2: function() {
-            if(this.$el.find('.square__button-group').attr("disabled") != "disabled") {
-                var $nail = this.$el.find('.square__nail');
-                $nail.animate({ top: "+=15"});
-                console.log(parseInt($nail.css('top'), 10));
-                if((parseInt($nail.css('top'), 10) > 245)) {
-                    alert("WINNER");
-                    this.$el.find('.square__button-group').attr("disabled", "disabled");
-                }
-            }
+        btn1Click: function() {
+            this.gameSocket.sendForce(5, this.model.get('name'));
         },
-        knock3: function() {
-            if(this.$el.find('.square__button-group').attr("disabled") != "disabled") {
-                var $nail = this.$el.find('.square__nail');
-                $nail.animate({ top: "+=25"});
-                console.log(parseInt($nail.css('top'), 10));
-                if((parseInt($nail.css('top'), 10) > 245)) {
-                    alert("WINNER");
-                    this.$el.find('.square__button-group').attr("disabled", "disabled");
-                }
-            }
+        btn2Click: function() {
+            this.gameSocket.sendForce(10);
         },
-        reset: function() {
-            $nail = this.$el.find('.square__nail').animate({ top: '110px'}, 'fast');
-            this.$el.find('.square__button-group').attr("disabled", false);
+        btn3Click: function() {
+            this.gameSocket.sendForce(20);
+        },
+        backClick: function(){
+            this.gameSocket.ws.close();
         }
 
     });
 
-    return  new View();
+    return View;
 });

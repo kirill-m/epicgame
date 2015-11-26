@@ -11,33 +11,59 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.page',
+        el: '.scoreboard',
         template: tmpl,
-        collection: players,
-        model: player,
+        collection: new players(),
+        player: player,
+        name: 'scoreboard',
+        model: null,
         initialize: function () {
-            for (var i = 0; i < 10; i++) {
-            var rand_name = Math.random().toString(36).substr(2, 5);
-            var rand_score = Math.floor(Math.random()*(100));
-            this.collection.push(new this.model({name: rand_name, score: rand_score}));
-            }
-            this.collection.sort('score');
         },
+        events: {
+            'click #top10': function() {this.setModelScoreboard(event, 10)},
+            'click #all': function() {this.setModelScoreboard(event, 'all')},
+        },
+
         render: function () {
             this.$el.html(this.template(this.collection.toJSON()));
-            this.delegateEvents();
-            this.$el.find(".square").css('bottom', '700px')
-                .animate({bottom: 0});
-            return this;
         },
+
         show: function () {
-
+            this.getScoreboard();
+            this.trigger("show", this);
         },
-        hide: function () {
 
-        }
+        hide: function () {
+            this.$el.hide();
+        },
+
+        setModelScoreboard: function(event, str) {
+            event.preventDefault();
+            localStorage.setItem('scores', str);
+            this.getScoreboard();
+            this.render();
+        },
+
+        getScoreboard: function() {
+            var that = this;
+            if (localStorage.scores) {
+                var scores = localStorage.getItem('scores');
+                this.collection.fetch({
+                    url: this.collection.getUrl(scores),
+                    success: function(response){console.log('Fetched!'); that.render();},
+                    error: function(response) {console.log("ERROR"); localStorage.clear(); that.render();}
+                });
+            } else {
+                this.collection.fetch({
+                    success: function(response){console.log('Fetched!'); that.render();},
+                    error: function(response){console.log(response);}
+                });
+            }
+        },
+
+
 
     });
 
-    return new View();
+    return View;
 });

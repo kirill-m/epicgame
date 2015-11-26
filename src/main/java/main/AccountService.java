@@ -1,40 +1,32 @@
 package main;
 
-
-import base.GameUser;
+import database.DBService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-
+/**
+ * Created by Сергей on 20.11.2015.
+ */
 public class AccountService {
 
     @NotNull
-    private Map<String, UserProfile> users = new HashMap<>();
+    private DBService dbService;
     @NotNull
     private Map<String, UserProfile> sessions = new HashMap<>();
 
-    public boolean addUser(String userName, UserProfile userProfile) {
-        if (users.containsKey(userName))
-            return false;
-        int id = users.size();
-        userProfile.setId(id);
-        users.put(userName, userProfile);
-        return true;
+    public AccountService(@NotNull DBService dbService){
+        this.dbService = dbService;
     }
-
-    public UserProfile createRandomUser(){
-        Random random = new Random();
-        Integer randInt = random.nextInt();
-        String name = randInt.toString();
-        int id = users.size();
-        UserProfile user = new UserProfile(name,"");
-        user.setId(id);
-        users.put(name,user);
-        return user;
+    public boolean addUser(String userName, UserProfile userProfile) {
+        if (dbService.isUserExist(userName)){
+            return false;
+        }
+        dbService.createUser(userName, userProfile.getPassword());
+        return true;
     }
 
     public void addSessions(String sessionId, UserProfile userProfile) {
@@ -43,7 +35,7 @@ public class AccountService {
 
     @Nullable
     public UserProfile getUser(String userName) {
-        return users.get(userName);
+        return dbService.getUser(userName);
     }
 
     @Nullable
@@ -75,9 +67,15 @@ public class AccountService {
     }
 
     public int countSignUp() {
-        return users.size();
+        return dbService.getUsersCount();
     }
 
+    public ArrayList<UserProfile> getUsersScoreBoard(int limit) {
+        return dbService.getUsersScoreboard(limit);
+    }
+
+    public ArrayList<UserProfile> getUsersScoreBoard() {
+        return dbService.getUsersScoreboard();
+    }
 
 }
-

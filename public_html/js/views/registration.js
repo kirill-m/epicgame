@@ -7,32 +7,35 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: '.page',
+        el: '.registration',
         template: tmpl,
+        name: 'registration',
         events: {
-            'submit': 'onSubmit'
+            'submit': 'onSubmit',
+            'keyup .register-form__input': 'saveRegName',
+            'click .button_back': function() { localStorage.setItem('regName', ''); $(".register-form").trigger('reset');}
         },
         initialize: function () {
         },
         render: function () {
-            console.log("from register");
             this.$el.html(this.template);
             this.delegateEvents();
-            //this.listenTo(this.el, "click", this.onSubmit);
-            //this.$el.find(".register-form").on("submit", this.onSubmit);
-//            this.$el.find(".square").css('bottom', '700px')
-//                .animate({bottom: 0});
+            $(".register-form__input[name='name']").val(localStorage.getItem('regName'));
             return this;
         },
+        saveRegName: function() {
+            var data =  $(".register-form__input:first-child").val();
+            localStorage.setItem('regName', data);
+        },
         show: function () {
-
+            this.trigger('show', this);
+            $(".corner__btn_reg").hide();
         },
         hide: function () {
-
+            this.$el.hide();
         },
 
         onSubmit: function(event) {
-            console.log("from reg submit");
             var $registerForm = $('.register-form__input');
             if (!$registerForm[0].checkValidity() ||
                 !$registerForm[1].checkValidity()) {
@@ -40,24 +43,15 @@ define([
             } else {
                 event.preventDefault();
                 var data =  $(".register-form").serialize();
-                $.ajax({
-                    type: "POST",
+                this.model.save({}, {
                     url: "/signup",
                     data: data
-                }).done(function(obj) {
-                    console.log("SERVER ANSWER : " + obj);
-                    var answer = JSON.parse(obj);
-                    if (answer.success) {
-                        location.href = "#";
-                        alert(answer.name +" " +answer.message);
-                    } else {
-                        alert(answer.name + " " +answer.message);
-                    }
-                });
+                })
             }
+            $(".register-form")[0].reset();
         }
 
     });
 
-    return new View();
+    return View;
 });

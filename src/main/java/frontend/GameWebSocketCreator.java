@@ -25,11 +25,12 @@ public class GameWebSocketCreator implements WebSocketCreator {
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
         String sessionId = req.getHttpServletRequest().getSession().getId();
-        UserProfile player = accountService.getUserBySession(sessionId);
-        if(player == null){
-            player = accountService.createRandomUser();
-            accountService.addSessions(sessionId,player);
-        }
+        System.out.println(sessionId);
+        UserProfile player = accountService.getUserBySession(String.valueOf(sessionId));
+//        if(player == null){
+//            player = accountService.createRandomUser();
+//            accountService.addSessions(sessionId,player);
+//        }
         return new GameWebSocket(player, gameMechanics, webSocketService);
     }
 }
