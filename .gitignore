@@ -1,7 +1,6 @@
 *~
 /node_modules/
 /target/
-*.jar
 .sass_cache/
 .sass-cache
 .sass-cache/*
