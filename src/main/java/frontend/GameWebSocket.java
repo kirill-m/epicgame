@@ -34,11 +34,11 @@ public class GameWebSocket {
         return user.getId();
     }
 
-    public void startGame(GameUser user, boolean shouldClick) {
+    public void startGame(GameUser gameUser, boolean shouldClick) {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "start");
-            jsonStart.put("enemyName", user.getEnemyName());
+            jsonStart.put("enemyName", gameUser.getEnemyName());
             jsonStart.put("shouldClick", shouldClick);
             session.getRemote().sendString(jsonStart.toJSONString());
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class GameWebSocket {
         }
     }
 
-    public void gameOver(GameUser user, boolean win) {
+    public void gameOver(boolean win) {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");
@@ -57,7 +57,7 @@ public class GameWebSocket {
         }
     }
 
-    public void disconnect(GameUser user) {
+    public void disconnect() {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "disconnect");
@@ -80,10 +80,8 @@ public class GameWebSocket {
         }
         JSONObject jsonObj = (JSONObject) obj;
 
-
-        //JSONObject jo = JSONObject.get("data");
-        System.out.println(jsonObj.get("force"));
-
+        if (jsonObj == null)
+            return;
         String x = String.valueOf(jsonObj.get("force"));
 
         int force = Integer.valueOf(x);
@@ -146,18 +144,6 @@ public class GameWebSocket {
         }
     }
 
-//    public void setFrictionRate(GameUser user) {
-//        JSONObject jsonStart = new JSONObject();
-//        jsonStart.put("status", "increment");
-//
-//        jsonStart.put("frictionRate", user.getFrictionRate());
-//        try {
-//            session.getRemote().sendString(jsonStart.toJSONString());
-//        } catch (IOException e) {
-//            System.out.print(e.toString());
-//        }
-//
-//    }
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
